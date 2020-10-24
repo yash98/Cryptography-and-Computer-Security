@@ -1,6 +1,9 @@
 import argparse
 import os
+from os import close
 import re
+
+from kasiski_method import kasiski
 
 def main():
 	parser = argparse.ArgumentParser()
@@ -22,7 +25,16 @@ def main():
 	else:
 		files = args.f
 
-	print(files)
+	for filename in files:
+		file = open(filename, 'r')
+		encrypted_text = file.read()
+		print(filename)
+		ngram_size_list = [3, 4, 5, 6, 7, 8, 9, 10]
+		key_length_candidates = set()
+		for ngram_size in ngram_size_list:
+			key_length_candidates.add(kasiski(encrypted_text, ngram_size))
+		print(key_length_candidates)
+		file.close()
 
 
 if __name__ == "__main__":
