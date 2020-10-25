@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 from functools import reduce
-import numpy as np
 
 def gcd_2_helper(a: int, b: int) -> int:
 	if a == 0:
@@ -18,9 +18,9 @@ def kasiski(encrypted_text: str, str_size: int) -> int:
 	for i in range(len(encrypted_text)-str_size):
 		str_ngram = encrypted_text[i:i+str_size]
 		if str_ngram in str_bin:
-			str_bin[str_ngram] = np.append(str_bin[str_ngram], i)
+			str_bin[str_ngram].append(i)
 		else:
-			str_bin[str_ngram] = np.array([i])
+			str_bin[str_ngram] = [i]
 
 	distance_set = set()
 	for ngram_distances in str_bin:

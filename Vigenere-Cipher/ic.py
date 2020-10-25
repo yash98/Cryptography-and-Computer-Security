@@ -1,5 +1,4 @@
-from numpy import array
-
+#!/usr/bin/env python
 ic_english = 0.0686
 ic_random = 0.038466
 
@@ -10,7 +9,7 @@ def index_of_coincidence(encrypted_text: str, key_length: int) -> float:
 	sequence_bins = {}
 	for i in range(key_length):
 		sequence_bins[i] = {}
-	sequence_length = array([0.0 for i in range(key_length)])
+	sequence_length = [0.0 for i in range(key_length)]
 
 	text_iter = iter(encrypted_text)
 	try:
