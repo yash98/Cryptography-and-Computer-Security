@@ -4,6 +4,7 @@ from os import close
 import re
 
 from kasiski_method import kasiski
+from ic import index_of_coincidence, ic_english
 
 def main():
 	parser = argparse.ArgumentParser()
@@ -27,13 +28,25 @@ def main():
 
 	for filename in files:
 		file = open(filename, 'r')
-		encrypted_text = file.read()
 		print(filename)
-		ngram_size_list = [3, 4, 5, 6, 7, 8, 9, 10]
+		encrypted_text = file.read()
 		key_length_candidates = set()
+		ngram_size_list = [3, 4, 5, 6, 7, 8, 9, 10]
 		for ngram_size in ngram_size_list:
 			key_length_candidates.add(kasiski(encrypted_text, ngram_size))
 		print(key_length_candidates)
+
+		best_key_length = None
+		best_key_len_diff = ic_english
+		for key_length in key_length_candidates:
+			ic_key_length = index_of_coincidence(encrypted_text, key_length)
+			ic_key_length_diff =  abs(ic_english - ic_key_length)
+			print(key_length, ic_key_length, ic_key_length_diff)
+			if best_key_len_diff > ic_key_length_diff:
+				best_key_len_diff = ic_key_length_diff
+				best_key_length = key_length
+		print(best_key_length)
+
 		file.close()
 
 
